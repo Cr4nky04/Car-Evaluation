@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib as jl
-import pickle
 import sklearn
 from sklearn.svm import SVR
 from sklearn.preprocessing import StandardScaler, OneHotEncoder, LabelEncoder, PolynomialFeatures
@@ -11,11 +10,18 @@ from sklearn.base import BaseEstimator, RegressorMixin, TransformerMixin, clone
 from Ankun_Multicolumn import MultiColumnLabelEncoder, DataFrameSelector
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor, BaggingRegressor, RandomForestRegressor
 from sklearn.pipeline import make_pipeline
+import os
+
+# Get the current file's directory
+base_dir = os.path.dirname(__file__)
+
+# Construct the full path to the CSV file
+df_file_path = os.path.join(base_dir, 'Remove-null-car_name-and-fill-null.csv')
+df3_file_path = os.path.join(base_dir, 'DataVersion3.csv')
 
 
-
-df = pd.read_csv("Remove-null-car_name-and-fill-null.csv")
-df_ver3 = pd.read_csv("DataVersion3.csv")
+df = pd.read_csv(df_file_path)
+df_ver3 = pd.read_csv(df3_file_path)
 
 def main():    
     print("scikit-learn version:", sklearn.__version__)
