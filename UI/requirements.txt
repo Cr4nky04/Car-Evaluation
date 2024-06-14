@@ -1,6 +1,6 @@
 streamlit
 pandas
-numpy
-joblib
+numpy==1.24.3
+joblib==1.3.2
 pickle
-sklearn
+scikit-learn==1.3.1
