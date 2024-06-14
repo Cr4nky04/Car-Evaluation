@@ -1,12 +1,9 @@
-import yfinance as yf
 import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib as jl
 import pickle
 import sklearn
-import torch
-import torch.nn as nn
 from sklearn.svm import SVR
 from sklearn.preprocessing import StandardScaler, OneHotEncoder, LabelEncoder, PolynomialFeatures
 from sklearn.decomposition import PCA, TruncatedSVD
@@ -204,39 +201,6 @@ def full_preprocessing(df):
     df, label_encoders = label_encode(df, columns_for_encoding)
     df = df.dropna()
     return df
-
-
-#MLP for regresion
-class MLP(nn.Module):
-    def __init__(self, layer_sizes):
-        super(MLP, self).__init__()
-        layers = []
-        for i in range(len(layer_sizes) - 1):
-            layers.append(nn.Linear(layer_sizes[i], layer_sizes[i+1]))
-            if i < len(layer_sizes) - 2: 
-                layers.append(nn.ReLU())
-        self.network = nn.Sequential(*layers)
-    
-    def forward(self, x):
-        return self.network(x)
-
-# Function to load the model
-@st.cache(allow_output_mutation=True)
-def load_model_1(filepath):
-    model = MLP(input_size=50, hidden_size=[111, 122, 80], output_size=1) 
-    model.load_state_dict(torch.load(filepath, map_location=torch.device('cpu')))
-    model.eval()
-    return model
-def load_model_2(filepath):
-    model = MLP(input_size=50, hidden_size=[111, 451, 692, 512, 80], output_size=1) 
-    model.load_state_dict(torch.load(filepath, map_location=torch.device('cpu')))
-    model.eval()
-    return model
-def load_model_3(filepath):
-    model = MLP(input_size=50, hidden_size=[49, 61, 61], output_size=1)     
-    model.load_state_dict(torch.load(filepath, map_location=torch.device('cpu')))
-    model.eval()
-    return model
 
 if __name__ == "__main__":
     main()
